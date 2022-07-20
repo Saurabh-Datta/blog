@@ -1,8 +1,9 @@
 import React from 'react'
 import moment from 'moment';
 import { RichText } from '@graphcms/rich-text-react-renderer';
+import { WhatsappShareButton, WhatsappIcon, LinkedinShareButton, LinkedinIcon } from 'next-share';
 
-const PostDetail = ({ post }) => {
+const PostDetail = ({ post, share_url }) => {
   return (
     <div className="bg-white shadow-lg rounded-lg lg:p-8 pb-12 mb-8">
         <div className="relative overflow-hidden shadow-md mb-6">
@@ -31,6 +32,12 @@ const PostDetail = ({ post }) => {
                 <span>
                     {moment(post.createdAt).format('DD MMMM YYYY')}  
                 </span>   
+                </div>
+                <div className="mx-8">
+                  <WhatsappShareButton url={share_url}><WhatsappIcon size={32} round /></WhatsappShareButton>
+                </div>
+                <div className="mx-0">
+                  <LinkedinShareButton url={share_url}><LinkedinIcon size={32} round /></LinkedinShareButton>
                 </div>
             </div>
             <h1 className="mb-8 text-3xl font-semibold">{post.title}</h1>
