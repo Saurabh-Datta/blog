@@ -44,7 +44,7 @@ const PostDetail = ({ post }) => {
                     h4: ({ children }) => <h4 className="text-xl font-semibold mb-4">{children}</h4>,
                     h5: ({ children }) => <h5 className="text-xl font-semibold mb-4">{children}</h5>,
                     h6: ({ children }) => <h6 className="text-xl font-semibold mb-4">{children}</h6>,
-                    a: ({ children, href, title, openInNewTab }) => (openInNewTab?<a href={href} title={title} target="_blank" className="text-blue-600">{children}</a>:<a href={href} title={title} className="text-blue-600">{children}</a>),
+                    a: ({ children, href, title, openInNewTab }) => (openInNewTab?<a href={href} title={title} target="_blank" rel="noreferrer" className="text-blue-600">{children}</a>:<a href={href} title={title} className="text-blue-600">{children}</a>),
                     img: ({src, altText, height, width}) => <img alt={altText} height={height} width={width} src={src} />,
                     video: ({src, height, width}) => <video src={src} height={height} width={width}/>,
                     iframe: ({height, width, url}) => <iframe height={height} width={width} src={url} />,
