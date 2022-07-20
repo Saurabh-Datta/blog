@@ -1,47 +1,8 @@
 import React from 'react'
 import moment from 'moment';
-
+import { RichText } from '@graphcms/rich-text-react-renderer';
 
 const PostDetail = ({ post }) => {
-    const getContentFragment = (index, text, obj, type) => {
-        let modifiedText = text;
-    
-        if (obj) {
-          if (obj.bold) {
-            modifiedText = (<b key={index}>{text}</b>);
-          }
-    
-          if (obj.italic) {
-            modifiedText = (<em key={index}>{text}</em>);
-          }
-    
-          if (obj.underline) {
-            modifiedText = (<u key={index}>{text}</u>);
-          }
-        }
-    
-        switch (type) {
-          case 'heading-three':
-            return <h3 key={index} className="text-xl font-semibold mb-4">{modifiedText.map((item, i) => <React.Fragment key={i}>{item}</React.Fragment>)}</h3>;
-          case 'paragraph':
-            return <p key={index} className="mb-8">{modifiedText.map((item, i) => <React.Fragment key={i}>{item}</React.Fragment>)}</p>;
-          case 'heading-four':
-            return <h4 key={index} className="text-md font-semibold mb-4">{modifiedText.map((item, i) => <React.Fragment key={i}>{item}</React.Fragment>)}</h4>;
-          case 'image':
-            return (
-              <img
-                key={index}
-                alt={obj.title}
-                height={obj.height}
-                width={obj.width}
-                src={obj.src}
-              />
-            );
-          default:
-            return modifiedText;
-        }
-    };
-    
   return (
     <div className="bg-white shadow-lg rounded-lg lg:p-8 pb-12 mb-8">
         <div className="relative overflow-hidden shadow-md mb-6">
@@ -73,10 +34,39 @@ const PostDetail = ({ post }) => {
                 </div>
             </div>
             <h1 className="mb-8 text-3xl font-semibold">{post.title}</h1>
-            {post.content.raw.children.map((typeObj,index)=>{
-                const children = typeObj.children.map((item, itemIndex) => getContentFragment(item, item.text, item))
-                return getContentFragment(index,children, typeObj, typeObj.type)
-            })}
+              <React.Fragment>
+                <RichText 
+                  content={post.content.raw} 
+                  renderers={{
+                    h1: ({ children }) => <h1 className="text-xl font-semibold mb-4">{children}</h1>,
+                    h2: ({ children }) => <h2 className="text-xl font-semibold mb-4">{children}</h2>,
+                    h3: ({ children }) => <h3 className="text-xl font-semibold mb-4">{children}</h3>,
+                    h4: ({ children }) => <h4 className="text-xl font-semibold mb-4">{children}</h4>,
+                    h5: ({ children }) => <h5 className="text-xl font-semibold mb-4">{children}</h5>,
+                    h6: ({ children }) => <h6 className="text-xl font-semibold mb-4">{children}</h6>,
+                    a: ({ children, href, title, openInNewTab }) => (openInNewTab?<a href={href} title={title} target="_blank" className="text-blue-600">{children}</a>:<a href={href} title={title} className="text-blue-600">{children}</a>),
+                    img: ({src, altText, height, width}) => <img alt={altText} height={height} width={width} src={src} />,
+                    video: ({src, height, width}) => <video src={src} height={height} width={width}/>,
+                    iframe: ({height, width, url}) => <iframe height={height} width={width} src={url} />,
+                    p: ({ children }) => <p className="mb-8">{children}</p>,
+                    ul: ({ children }) => <ul className="mb-8 list-disc">{children}</ul>,
+                    ol: ({ children }) => <ol className="mb-8 list-decimal">{children}</ol>,
+                    li: ({ children }) => <li className="mb-1 ml-4">{children}</li>,
+                    table: ({ children }) => <table>{children}</table>,
+                    table_head: ({ children }) => <thead>{children}</thead>,
+                    table_header_cell: ({ children }) => <th>{children}</th>,
+                    table_body: ({ children }) => <tbody>{children}</tbody>,
+                    table_row: ({ children }) => <tr>{children}</tr>,
+                    table_cell: ({ children }) => <td>{children}</td>,
+                    blockquote: ({ children }) => <blockquote>{children}</blockquote>,
+                    bold: ({ children }) => <strong>{children}</strong>,
+                    italic: ({ children }) => <i>{children}</i>,
+                    underline: ({ children }) => <u>{children}</u>,
+                    code: ({ children }) => <code className="bg-slate-200 rounded-xl px-2 cursor-copy">{children}</code>,
+                    code_block: ({ children }) => <code className="bg-slate-200 rounded-xl px-2 cursor-copy">{children}</code>,
+                  }}  
+                />
+              </React.Fragment>
         </div>
     </div>
   );
