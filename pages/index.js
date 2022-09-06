@@ -1,10 +1,23 @@
 import Head from 'next/head'
+import { useEffect } from 'react';
 import { PostCard, Categories, PostWidget } from '../components';
 import { getPosts } from '../services';
 import { FeaturedPosts } from '../sections';
 
 
 const Home = ({ posts }) => {
+  useEffect(() => {
+    return () => {
+      console.log("%c Developed by Saurabh Datta","color: cyan; font-size: 22px");
+      console.log("%c Look at some of my profiles:","font-family:montonic; font-size:16px");
+      console.log("%c 1. LeetCode: https://leetcode.com/SaurabhDatta/","font-family:monotonic; font-size:16px");
+      console.log("%c 2. GitHub: https://github.com/Saurabh-Datta/","font-family:monotonic; font-size:16px");
+      console.log("%c 3. LinkedIn: https://www.linkedin.com/in/saurabhdatta22/","font-family:monotonic; font-size:16px");
+      console.log("%c 4. Portfolio: https://saurabhdatta.me/","font-family:monotonic; font-size:16px");
+    }
+  }, [])
+  
+ 
   return (
     <div className="container mx-auto px-10 mb-8">
       <Head>
